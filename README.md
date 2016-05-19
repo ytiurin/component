@@ -1,4 +1,4 @@
-Write managable components with public interface, events and async model observers
+Write managable components with public interface, events and async model observation.
 
 ```javascript
 function MyComponent()
