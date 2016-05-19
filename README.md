@@ -33,5 +33,7 @@ myComponent.on('myEvent',function(p1,p2,p3){
   alert('My component dispatched event');
 });
 
+document.body.appendChild(myComponent.element);
+
 myComponent.myExtraMethod();
 ```
