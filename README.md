@@ -8,17 +8,17 @@ function MyComponent()
 
   component.onModelUpdate({
     prop1:function(value){
-      //
+      // Model property changed
     },
     prop2:function(value){
-      //
+      // Model property changed
     }
   });
 
   component.dispatch('myEvent',1,2,3);
 
   component.publ.myExtraMethod=function(){
-    //
+    // Extend component public interface
   }
 }
 
