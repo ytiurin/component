@@ -17,7 +17,13 @@ function MyComponentConstructor()
 
   component.publ.myExtraMethod=function(){
     //
-  }
+  };
+
+  component.publ.destoy=function(){
+    // ... do some cleanup (unsubscribe events, etc.)
+
+    Component.destroy(component);
+  };
 }
 
 //...
@@ -31,5 +37,9 @@ myComponent.on('myEvent',function(p1,p2,p3){
   alert('My component dispatched event',p1,p2,p3);
 });
 
+document.body.appendChild(myComponent.element);
+
 myComponent.myExtraMethod();
+
+myComponent.destroy();
 ```

@@ -17,7 +17,13 @@ function MyComponentConstructor()
 
   component.publ.myExtraMethod=function(){
     //
-  }
+  };
+
+  component.publ.destoy=function(){
+    // ... do some cleanup (unsubscribe events, etc.)
+
+    Component.destroy(component);
+  };
 }
 
 //...
@@ -31,8 +37,11 @@ myComponent.on('myEvent',function(p1,p2,p3){
   alert('My component dispatched event',p1,p2,p3);
 });
 
+document.body.appendChild(myComponent.element);
+
 myComponent.myExtraMethod();
 
+myComponent.destroy();
 */
 
 (function (root, factory) {
@@ -51,7 +60,15 @@ myComponent.myExtraMethod();
     }
 
 }(this,function(){
+
   'use strict';
+
+  function detachElements(elements)
+  {
+    for(var i=elements.length;i--;)
+      elements[i].parentNode&&
+        elements[i].parentNode.removeChild(elements[i]);
+  }
 
   function Component(publicInterface,HTML)
   {
@@ -126,9 +143,7 @@ myComponent.myExtraMethod();
 
     // COMPONENT INTERFACE
     component.destroy=function(){
-      for(var i=elements.length;i--;)
-        elements[i].parentNode&&
-          elements[i].parentNode.removeChild(elements[i]);
+      detachElements(component.elements);
     };
 
     component.dispatch=function(eventName){
@@ -195,6 +210,15 @@ myComponent.myExtraMethod();
       p.innerHTML=HTML;
       component.elements=toArray(p.children);
       gainAnchorElements(component.elements,component.anchors);
+    }
+  }
+
+  Component.destroy=function(component){
+    try{
+      detachElements(component.elements);
+    }
+    catch(e){
+      throw "Could not destroy component:"+e.message;
     }
   }
 
