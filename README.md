@@ -25,7 +25,7 @@ function MyComponent()
   component.publ.destoy=function(){
     // ... do some cleanup (unsubscribe events, etc.)
 
-    Component.destroy(component);
+    component.destroy();
   };
 }
 
@@ -40,7 +40,7 @@ myComponent.on('myEvent',function(p1,p2,p3){
   alert('My component dispatched event');
 });
 
-document.body.appendChild(myComponent.element);
+component.mount(document.body);
 
 myComponent.myExtraMethod();
 

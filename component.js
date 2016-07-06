@@ -25,7 +25,7 @@ function MyComponent()
   component.publ.destoy=function(){
     // ... do some cleanup (unsubscribe events, etc.)
 
-    Component.destroy(component);
+    component.destroy();
   };
 }
 
@@ -40,7 +40,7 @@ myComponent.on('myEvent',function(p1,p2,p3){
   alert('My component dispatched event');
 });
 
-document.body.appendChild(myComponent.element);
+component.mount(document.body);
 
 myComponent.myExtraMethod();
 
@@ -65,13 +65,6 @@ myComponent.destroy();
 }(this,function(){
 
   'use strict';
-
-  function detachElements(elements)
-  {
-    for(var i=elements.length;i--;)
-      elements[i].parentNode&&
-        elements[i].parentNode.removeChild(elements[i]);
-  }
 
   function Component(publicInterface,HTML)
   {
@@ -145,8 +138,13 @@ myComponent.destroy();
     component.publ=publicInterface||{};
 
     // COMPONENT INTERFACE
-    component.destroy=function(){
-      detachElements(component.elements);
+    component.destroy=function()
+    {
+      var elements=component.elements;
+
+      for(var i=elements.length;i--;)
+        elements[i].parentNode&&
+          elements[i].parentNode.removeChild(elements[i]);
     };
 
     component.dispatch=function(eventName){
@@ -158,15 +156,6 @@ myComponent.destroy();
       });
     };
 
-    component.on=function(){
-      var userEventCallbacks=argsToObj(arguments);
-
-      for(var eventName in userEventCallbacks){
-        eventCallbacks[eventName]=eventCallbacks[eventName]||[];
-        eventCallbacks[eventName].push(userEventCallbacks[eventName]);
-      }
-    };
-
     component.onModelUpdate=function(){
       var updateCallbacks=argsToObj(arguments);
 
@@ -175,6 +164,19 @@ myComponent.destroy();
         modelObservers[propName]=modelObservers[propName]||[];
         modelObservers[propName].push(updateCallbacks[propName]);
         notifyObservers(propName);
+      }
+    };
+
+    component.mount=function(parent){
+      var elements=component.elements;
+
+      try{
+        var i=-1;
+        while(++i<elements.length)
+          parent.appendChild(elements[i]);
+      }
+      catch(e){
+        throw "Could not mount component: "+e.message;
       }
     };
 
@@ -196,7 +198,7 @@ myComponent.destroy();
     });
 
     // PUBLIC INTERFACE
-    ['destroy','element','elements','model','on','set']
+    ['element','elements','model','set']
 
     .forEach(function(propName){
       Object.defineProperty(component.publ,propName,{
@@ -207,21 +209,29 @@ myComponent.destroy();
       });
     });
 
+    component.publ.destroy=function(){
+      component.destroy();
+    };
+
+    component.publ.mount=function(parent){
+      component.mount(parent);
+    };
+
+    component.publ.on=function(){
+      var userEventCallbacks=argsToObj(arguments);
+
+      for(var eventName in userEventCallbacks){
+        eventCallbacks[eventName]=eventCallbacks[eventName]||[];
+        eventCallbacks[eventName].push(userEventCallbacks[eventName]);
+      }
+    };
+
     // HTML-> DOM
     if(HTML&&document){
       var p=document.createElement('div');
       p.innerHTML=HTML;
       component.elements=toArray(p.children);
       gainAnchorElements(component.elements,component.anchors);
-    }
-  }
-
-  Component.destroy=function(component){
-    try{
-      detachElements(component.elements);
-    }
-    catch(e){
-      throw "Could not destroy component:"+e.message;
     }
   }
 

@@ -15,13 +15,14 @@ QUnit.test( "Component interface", function( assert ) {
     element:undefined,
     elements:[],
     model:{},
-    on:function(){},
+    mount:function(){},
     onModelUpdate:function(){},
     "publ": {
       "destroy": {},
       "element": undefined,
       "elements": [],
       "model": {},
+      "mount": {},
       "on": {},
       "set": {}
     },
@@ -37,6 +38,7 @@ QUnit.test( "Component public interface", function( assert ) {
     element:undefined,
     elements:[],
     model:{},
+    mount:function(){},
     on:function(){},
     set:function(){}
   }, "Component public interface is consistent");
@@ -78,21 +80,21 @@ QUnit.test( "Events subscription and dispatching", function( assert ) {
   var done = assert.async( 3 );
 
   var component=new Component;
-  component.on('myEvent',function(){
+  component.publ.on('myEvent',function(){
     assert.ok( true, "Event subscription" );
     done();
   });
   component.dispatch('myEvent');
 
   var component=new Component;
-  component.on({myEvent:function(param1,param2){
+  component.publ.on({myEvent:function(param1,param2){
     assert.ok( param1===1&&param2===2, "Parameters passing" );
     done();
   }});
   component.dispatch('myEvent',1,2);
 
   var component=new Component;
-  component.on({myEvent:function(param){
+  component.publ.on({myEvent:function(param){
     assert.ok( param===3, "Deferred dispatching" );
     done();
   }});
@@ -104,11 +106,11 @@ QUnit.test( "Multiple event subscription", function( assert ) {
   var done = assert.async( 2 );
 
   var component=new Component;
-  component.on('myEvent',function(){
+  component.publ.on('myEvent',function(){
     assert.ok( true, "First subscription passed" );
     done();
   });
-  component.on('myEvent',function(){
+  component.publ.on('myEvent',function(){
     assert.ok( true, "Second subscription passed" );
     done();
   });
