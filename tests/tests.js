@@ -24,9 +24,11 @@ QUnit.test( "Component interface", function( assert ) {
       "model": {},
       "mount": {},
       "on": {},
-      "set": {}
+      "set": {},
+      "unmount": {}
     },
-    set:function(){}
+    set:function(){},
+    unmount:function(){}
   }, "Component interface is consistent");
 });
 
@@ -40,7 +42,8 @@ QUnit.test( "Component public interface", function( assert ) {
     model:{},
     mount:function(){},
     on:function(){},
-    set:function(){}
+    set:function(){},
+    unmount:function(){}
   }, "Component public interface is consistent");
 });
 

@@ -141,11 +141,7 @@ myComponent.destroy();
     // COMPONENT INTERFACE
     component.destroy=function()
     {
-      var elements=component.elements;
-
-      for(var i=elements.length;i--;)
-        elements[i].parentNode&&
-          elements[i].parentNode.removeChild(elements[i]);
+      component.unmount();
     };
 
     component.dispatch=function(eventName){
@@ -169,12 +165,13 @@ myComponent.destroy();
     };
 
     component.mount=function(parent){
-      var elements=component.elements;
+      parent = parent || document.body;
 
       try{
-        var i=-1;
-        while(++i<elements.length)
-          parent.appendChild(elements[i]);
+        var el,i=0;
+
+        while(el = component.elements[i++])
+          parent.appendChild(el);
       }
       catch(e){
         throw "Could not mount component: "+e.message;
@@ -191,6 +188,15 @@ myComponent.destroy();
       }
     };
 
+    component.unmount=function()
+    {
+      var el,i=0;
+
+      while(el = component.elements[i++])
+        el.parentNode&&
+          el.parentNode.removeChild(el);
+    };
+
     Object.defineProperty(component,'element',{
       configurable:true,
       enumerable:true,
@@ -199,7 +205,7 @@ myComponent.destroy();
     });
 
     // PUBLIC INTERFACE
-    ['element','elements','model','set']
+    ['element','elements','model','set','unmount']
 
     .forEach(function(propName){
       Object.defineProperty(component.publ,propName,{
