@@ -205,7 +205,7 @@ myComponent.destroy();
     });
 
     // PUBLIC INTERFACE
-    ['element','elements','model','set','unmount']
+    ['element','elements','model','set']
 
     .forEach(function(propName){
       Object.defineProperty(component.publ,propName,{
@@ -231,6 +231,10 @@ myComponent.destroy();
         eventCallbacks[eventName]=eventCallbacks[eventName]||[];
         eventCallbacks[eventName].push(userEventCallbacks[eventName]);
       }
+    };
+
+    component.publ.unmount=function(){
+      component.unmount();
     };
 
     // HTML-> DOM
