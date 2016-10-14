@@ -1,4 +1,4 @@
-# Component container :watermelon: (sort of)
+# Component constructor :watermelon:
 
 Write managable components with public interface, events and async model observation.
 
@@ -67,8 +67,7 @@ myComponent.myMethod();
 myComponent.destroy();
 ```
 
-## Old school
-Same example in ES3:
+##Same code in ES3:
 
 ```javascript
 // Declare your component
