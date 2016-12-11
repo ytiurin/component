@@ -1,51 +1,122 @@
 /*
-Write managable components with public interface, events and async model observation.
+  Write managable components with public interface, events and async model observation.
 
-function MyComponent()
-{
-  // `this` is now a public interface
-  var component=new Component(this,'<p>My basic component</p>');
+  // Declare your component
+  function MyComponent()
+  {
+    // `this` is now a public interface
+    var component = new Component(this,'<p>My basic component</p>');
 
-  component.onModelUpdate({
-    prop1:function(value){
-      // Model property changed
-    },
-    prop2:function(value){
-      // Model property changed
-    }
+    // Observe component model
+    component.onModelUpdate({
+
+      // Observer for component.model.prop1
+      prop1:function(value){
+        // Model property changed
+      },
+
+      // Observer for component.model.prop2
+      prop2:function(value){
+        // Model property changed
+      }
+    });
+
+    // Dispatch events
+    component.dispatch('myEvent',1,2,3);
+
+    // Extend component public interface
+    component.publ.myMethod = function(){
+      //...
+    };
+
+    // Override destructor
+    component.publ.destoy = function(){
+      // ... do some cleanup (unsubscribe events, etc.)
+
+      component.destroy();
+    };
+  }
+
+  //...
+
+  // Create your new component
+  var myComponent = new MyComponent;
+
+  // Mutate component model
+  myComponent.set('prop1',1);
+  myComponent.set('prop2',2);
+
+  // Subscribe to component events
+  myComponent.on('myEvent',function(p1,p2,p3){
+    alert('My component dispatched event');
   });
 
-  component.dispatch('myEvent',1,2,3);
+  // Mount component to a document body
+  myComponent.mount(document.body);
 
-  // Extend component public interface
-  component.publ.myMethod=function(){
-    //...
-  };
+  // Use component public interface
+  myComponent.myMethod();
 
-  // Overload destructor
-  component.publ.destoy=function(){
-    // ... do some cleanup (unsubscribe events, etc.)
+  // Destroy component
+  myComponent.destroy();
+  // Declare your component
+  function MyComponent()
+  {
+    // `this` is now a public interface
+    var component = new Component(this,'<p>My basic component</p>');
 
-    component.destroy();
-  };
-}
+    // Observe component model
+    component.onModelUpdate({
 
-//...
+      // Observer for component.model.prop1
+      prop1:function(value){
+        // Model property changed
+      },
 
-var myComponent=new MyComponent;
+      // Observer for component.model.prop2
+      prop2:function(value){
+        // Model property changed
+      }
+    });
 
-myComponent.set('prop1',1);
-myComponent.set('prop2',2);
+    // Dispatch events
+    component.dispatch('myEvent',1,2,3);
 
-myComponent.on('myEvent',function(p1,p2,p3){
-  alert('My component dispatched event');
-});
+    // Extend component public interface
+    component.publ.myMethod = function(){
+      //...
+    };
 
-myComponent.mount(document.body);
+    // Override destructor
+    component.publ.destoy = function(){
+      // ... do some cleanup (unsubscribe events, etc.)
 
-myComponent.myMethod();
+      component.destroy();
+    };
+  }
 
-myComponent.destroy();
+  //...
+
+  // Create your new component
+  var myComponent = new MyComponent;
+
+  // Mutate component model
+  myComponent.set('prop1',1);
+  myComponent.set('prop2',2);
+
+  // Subscribe to component events
+  myComponent.on('myEvent',function(p1,p2,p3){
+    alert('My component dispatched event');
+  });
+
+  // Mount component to a document body
+  myComponent.mount(document.body);
+
+  // Use component public interface
+  myComponent.myMethod();
+
+  // Destroy component
+  myComponent.destroy();
 */
 
 (function (root, factory) {

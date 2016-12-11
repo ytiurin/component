@@ -6,7 +6,7 @@ Write managable components with public interface, events and async model observa
 // Declare your component
 function MyComponent()
 {
-  // `this` will become a public interface
+  // `this` is now a public interface
   const component = new Component(this,'<p>My basic component</p>');
 
   // Observe component model
@@ -73,7 +73,7 @@ myComponent.destroy();
 // Declare your component
 function MyComponent()
 {
-  // `this` will become a public interface
+  // `this` is now a public interface
   var component = new Component(this,'<p>My basic component</p>');
 
   // Observe component model
