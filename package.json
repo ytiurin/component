@@ -1,0 +1,28 @@
+{
+  "name": "component",
+  "version": "1.0.0",
+  "description": "Write components with interface, events and observable model",
+  "main": "component.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytiurin/component.git"
+  },
+  "keywords": [
+    "component"
+  ],
+  "author": "Eugene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ytiurin/component/issues"
+  },
+  "homepage": "https://github.com/ytiurin/component#readme",
+  "devDependencies": {
+    "jest": "^18.1.0"
+  }
+}
