@@ -97,11 +97,12 @@ QUnit.test( "Events subscription and dispatching", function( assert ) {
   component.dispatch('myEvent',1,2);
 
   var component=new Component;
-  component.publ.on({myEvent:function(param){
-    assert.ok( param===3, "Deferred dispatching" );
+  component.publ.on({myEvent:function(){
+    assert.ok( a===1, "Deferred dispatching" );
     done();
   }});
-  component.dispatch('myEvent',3);
+  component.dispatch('myEvent');
+  var a = 1
 });
 
 QUnit.test( "Multiple event subscription", function( assert ) {
