@@ -1,7 +1,7 @@
 {
   "name": "component",
   "version": "1.0.0",
-  "description": "Write components with interface, events and observable model",
+  "description": "Write components with interface, events and observable model.",
   "main": "component.js",
   "directories": {
     "test": "tests"
