@@ -12,14 +12,12 @@ QUnit.test( "Component interface", function( assert ) {
     anchors:[],
     destroy:function(){},
     dispatch:function(){},
-    element:undefined,
     elements:[],
     model:{},
     mount:function(){},
     onModelUpdate:function(){},
     "publ": {
       "destroy": {},
-      "element": undefined,
       "elements": [],
       "model": {},
       "mount": {},
@@ -37,7 +35,6 @@ QUnit.test( "Component public interface", function( assert ) {
   var component=new Component(publicInterface);
   assert.propEqual( publicInterface, {
     destroy:function(){},
-    element:undefined,
     elements:[],
     model:{},
     mount:function(){},
